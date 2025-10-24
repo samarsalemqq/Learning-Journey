@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct Learning_JourneyApp: App {
-    var body: some Scene {
+    @StateObject private var viewModel = LearningViewModel()
+    
+    var body: some Scene{
         WindowGroup {
-            ContentView()
+            //ContentView()
+                CurrentDayDefault()
+                .environmentObject(viewModel)
+
         }
     }
 }
