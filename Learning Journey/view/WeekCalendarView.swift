@@ -60,7 +60,7 @@ var body: some View {
         Divider().background(Color.gray.opacity(0.4))
         
         // Learning Swift Section
-        Text("Learning Swift")
+        Text("Learning \(viewModel.learingGoal)")
             .font(.headline)
             .foregroundColor(.white)
             .padding(.horizontal)

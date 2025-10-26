@@ -9,7 +9,8 @@ import SwiftUI
 import Combine
 
 class LearningViewModel: ObservableObject {
-    
+    @Published var learingGoal:String="Swift"
+    @Published var showupdateAlert: Bool = false
     @Published var weekDays: [DayStatus] = [
         DayStatus(date: 20, isFreezed: true),
         DayStatus(date: 21, isLearned: true),
@@ -64,9 +65,8 @@ class LearningViewModel: ObservableObject {
         if day.isFreezed { return Color(red: 60/255, green: 221/255, blue: 254/255) }
         return .white
     }
-    
-    // MARK: - Helpers
-    
+     
+        
     private func disableButtonTemporarily() {
         isButtonDisabled = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 86400) { // يعيد تفعيل الزر بعد 24 ساعه

@@ -29,23 +29,6 @@
 		333D80E72EA1175F00AC62CD /* Learning JourneyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Learning JourneyUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		3335DC322EAA61D9002077E9 /* Exceptions for "Learning JourneyUITests" folder in "Learning Journey" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Enbording.swift,
-			);
-			target = 333D80CF2EA1175F00AC62CD /* Learning Journey */;
-		};
-		3335DC332EAA61D9002077E9 /* Exceptions for "Learning JourneyUITests" folder in "Learning JourneyUITests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Enbording.swift,
-			);
-			target = 333D80E62EA1175F00AC62CD /* Learning JourneyUITests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		333D80D22EA1175F00AC62CD /* Learning Journey */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -59,10 +42,6 @@
 		};
 		333D80EA2EA1175F00AC62CD /* Learning JourneyUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				3335DC322EAA61D9002077E9 /* Exceptions for "Learning JourneyUITests" folder in "Learning Journey" target */,
-				3335DC332EAA61D9002077E9 /* Exceptions for "Learning JourneyUITests" folder in "Learning JourneyUITests" target */,
-			);
 			path = "Learning JourneyUITests";
 			sourceTree = "<group>";
 		};

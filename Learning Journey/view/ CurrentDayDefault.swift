@@ -7,8 +7,10 @@
 
 import SwiftUI
 
+
 struct CurrentDayDefault:View {
     @EnvironmentObject private var viewModel: LearningViewModel
+    @State private var showEditGoal: Bool = false
     var body: some View {
         ZStack{
             Color.black.ignoresSafeArea()
@@ -37,7 +39,7 @@ struct CurrentDayDefault:View {
                                     .glassEffect(.clear))
                         
                     }
-                    Button(action: {}) {
+                    Button(action: {showEditGoal = true}) {
                         Image(systemName: "pencil.and.outline")
                             .font(.system(size: 25))
                             .foregroundColor(.white)
@@ -50,9 +52,10 @@ struct CurrentDayDefault:View {
                             )
                         
                     }
-                    
-                    
-                    
+                    .sheet(isPresented: $showEditGoal){
+                        LearningGoalView()
+                            .environmentObject(viewModel)
+                    }
                 }
                 .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .topTrailing)
                 .padding(.top, -60)
@@ -118,5 +121,3 @@ struct CurrentDayDefault:View {
             .environmentObject(LearningViewModel())
         
     }
-
-
