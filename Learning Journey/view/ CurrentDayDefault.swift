@@ -129,7 +129,7 @@ struct CurrentDayDefault: View {
                         ActivityLastday()
                             .environmentObject(viewModel)
                             .transaction { transaction in
-                                transaction.disablesAnimations = false // ✅ يمنع أي انتقال
+                                transaction.disablesAnimations = false
                             }
                     }
 
@@ -168,7 +168,7 @@ struct CurrentDayDefault: View {
                     
                 }
                // .padding(.top, 40)
-                .padding(.bottom, 20)
+                .padding(.bottom, 30)
                 
             }
         }

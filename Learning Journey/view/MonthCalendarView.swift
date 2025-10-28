@@ -49,7 +49,6 @@ struct MonthCalendarView: View {
                 ForEach(monthDays, id: \.self) { day in
                     let calendar = Calendar.current
                     
-                    // ✅ الإصلاح هنا: نستبدل var comps بالطريقة الصحيحة
                     if let fullDate = calendar.date(from: DateComponents(
                         year: viewModel.selectedYear,
                         month: viewModel.selectedMonth,

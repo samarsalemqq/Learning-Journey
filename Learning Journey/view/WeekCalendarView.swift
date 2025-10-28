@@ -177,6 +177,8 @@ struct WeekCalendarView: View {
                             "",
                             selection: $selectedDate,
                             displayedComponents: [.date]
+                             
+                            
                         )
                         .environment(\.colorScheme, .dark)
                         .datePickerStyle(.wheel)

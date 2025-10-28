@@ -67,11 +67,10 @@ struct ActivityLastday: View {
                 
                 Spacer().frame(height: 8) 
                 
-                // MARK: - Calendar Section
+             
                 WeekCalendarView()
                     .environmentObject(viewModel)
-                
-                // MARK: - Completion Message
+            
                 VStack(spacing: 15) {
                     Image("image3")
                         .resizable()
@@ -93,7 +92,7 @@ struct ActivityLastday: View {
                 .padding(.top, 10)
                 
                 // MARK: - Buttons Section
-                VStack(spacing: 15) { // ✅ نفس المسافات بين الأزرار
+                VStack(spacing: 15) { //  نفس المسافات بين الأزرار
                     NavigationLink(destination: Enbording().environmentObject(viewModel)) {
                         Text("Set new learning goal")
                             .font(.headline)
@@ -127,7 +126,7 @@ struct ActivityLastday: View {
                         .background(Color("Color1"))
                         .padding(.horizontal, 10)
                 }
-                .padding(.bottom, 40) // ✅ نفس المسافة السفلية مثل CurrentDayDefault
+                .padding(.bottom, 30) 
             }
         }
     }

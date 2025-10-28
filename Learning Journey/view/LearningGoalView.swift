@@ -46,7 +46,6 @@ struct LearningGoalView: View {
                     Spacer()
                     if showCheckmark {
                         Button(action: {
-                            // تظهر البوب فقط لو تغير شيء فعلاً
                             if course != viewModel.learingGoal || selectedPeriod != viewModel.learningDuration {
                                 showPopup = true
                             }
