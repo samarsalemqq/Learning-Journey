@@ -38,7 +38,6 @@ struct MonthCalendarView: View {
             }
             
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 7), spacing: 10) {
-                // فراغ لبداية الشهر
                 ForEach(0..<(firstWeekdayOfMonth - 1), id: \.self) { _ in
                     Circle()
                         .fill(Color.clear)
@@ -57,18 +56,24 @@ struct MonthCalendarView: View {
                         let dayStatus = viewModel.weekDays.first {
                             calendar.isDate($0.date, inSameDayAs: fullDate)
                         }
+
+                        let isLearningMonth = calendar.component(.month, from: viewModel.currentDate) == viewModel.selectedMonth
+                        let color = isLearningMonth ? viewModel.circleColor(for: dayStatus ?? DayStatus(date: fullDate)) : Color(red: 0.08, green: 0.08, blue: 0.08)
+                        let textColor = isLearningMonth ? viewModel.textColor(for: dayStatus ?? DayStatus(date: fullDate)) : .white.opacity(0.4)
                         
                         Circle()
-                            .fill(viewModel.circleColor(for: dayStatus ?? DayStatus(date: fullDate)))
+                            .fill(color)
                             .frame(width: 36, height: 36)
                             .overlay(
                                 Text("\(day)")
-                                    .foregroundColor(viewModel.textColor(for: dayStatus ?? DayStatus(date: fullDate)))
+                                    .foregroundColor(textColor)
                                     .font(.system(size: 14, weight: .semibold))
                             )
                     }
                 }
+
+                    }
+                }
             }
         }
-    }
-}
+    

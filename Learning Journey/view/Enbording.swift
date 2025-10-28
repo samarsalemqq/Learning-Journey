@@ -18,9 +18,11 @@ struct Enbording: View {
     
     var body: some View {
         
+        
         NavigationStack {
             ZStack {
                 Color.black.ignoresSafeArea()
+                
                 
                 VStack(alignment:.leading,spacing: 40) {
                     
@@ -148,7 +150,9 @@ struct Enbording: View {
                         
                         
                     }
+                
                 }
+            .navigationBarBackButtonHidden(true)
                 
             }
         }
@@ -159,4 +163,5 @@ struct Enbording: View {
 #Preview {
     Enbording()
         .environmentObject(LearningViewModel())
+    
 }

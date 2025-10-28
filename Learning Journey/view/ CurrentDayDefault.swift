@@ -135,12 +135,19 @@ struct CurrentDayDefault: View {
 
 
                     // FREEZE BUTTON
+                    // FREEZE BUTTON
                     Button(action: {
                         if viewModel.freezeCount > 0 && !isFreezedToday && !isLearnedToday {
                             viewModel.logAsFreezed()
                             isFreezedToday = true
-                            viewModel.updateSelectedDay(isLearned: true, isFreezed: false)
-
+                            
+                            // ✅ يصبغ اليوم بالأزرق + يخزّنه كـ Freezed
+                            viewModel.updateSelectedDay(isLearned: false, isFreezed: true)
+                            
+                            // ✅ تحديث مباشر في الكالندر (بدون انتظار)
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                isFreezedToday = true
+                            }
                         }
                     }) {
                         Text("Log as Freezed")
@@ -153,10 +160,13 @@ struct CurrentDayDefault: View {
                             .background(
                                 Capsule()
                                     .fill(Color(red: 0.12, green: 0.45, blue: 0.52))
-                                    
                             )
                     }
-                    .padding(.horizontal, 50)
+                    .padding(.horizontal, 30)
+                    .disabled(viewModel.freezeCount == 0)
+
+                    }
+                    .padding(.horizontal, 30)
                     //.padding(.top, 20)
                     .disabled(viewModel.freezeCount == 0)
                     
@@ -167,7 +177,7 @@ struct CurrentDayDefault: View {
                     
                     
                 }
-               // .padding(.top, 40)
+                 .padding(.top, 40)
                 .padding(.bottom, 30)
                 
             }
@@ -178,7 +188,7 @@ struct CurrentDayDefault: View {
    
     
 
-    }
+    
 
     
 
