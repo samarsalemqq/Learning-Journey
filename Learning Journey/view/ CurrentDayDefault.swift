@@ -7,117 +7,183 @@
 
 import SwiftUI
 
-
-struct CurrentDayDefault:View {
+struct CurrentDayDefault: View {
     @EnvironmentObject private var viewModel: LearningViewModel
     @State private var showEditGoal: Bool = false
+    @State private var isLearnedToday = false
+    @State private var isFreezedToday = false
+    @State private var showCalendar = false
+    @State private var showGoalCompletedView = false
+
+
+    
     var body: some View {
-        ZStack{
+        ZStack {
+            
             Color.black.ignoresSafeArea()
+            .navigationBarBackButtonHidden(true)
             
-            
-            
-            VStack(spacing: 20){
-                Text("Activity")
-                    .font(.largeTitle)
-                    .bold()
-                    .foregroundColor(.white)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal,40)
+            VStack(spacing: 10) {
                 
-                
-                
-                HStack(spacing:10){
-                    Button(action:{}){
-                        Image(systemName: "calendar")
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .frame(width: 44 , height: 44)
-                            .background(
-                                Circle()
-                                    .foregroundStyle(.clear)
-                                    .glassEffect(.clear))
+                HStack(alignment: .firstTextBaseline) {
+                    Text("Activity")
+                        .font(.largeTitle)
+                        .bold()
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                    
+                    HStack(spacing: 16) {
                         
-                    }
-                    Button(action: {showEditGoal = true}) {
-                        Image(systemName: "pencil.and.outline")
-                            .font(.system(size: 25))
-                            .foregroundColor(.white)
-                            .frame(width: 44, height: 44)
-                            .background(
-                                Circle()
-                                    .foregroundStyle(.clear)
-                                    .glassEffect(.clear)
-                                
-                            )
+                        Button(action: { showCalendar = true }) {
+                            Image(systemName: "calendar")
+                                .font(.system(size: 25))
+                                .foregroundColor(.white)
+                                .frame(width: 44, height: 44)
+                                .background(
+                                    Circle()
+                                        .foregroundStyle(.clear)
+                                        .glassEffect(.clear)
+                                )
+                        }
+                        .fullScreenCover(isPresented: $showCalendar) {
+                            
+                            AllActivitiesView()
+                                .environmentObject(viewModel)
+                        }
                         
-                    }
-                    .sheet(isPresented: $showEditGoal){
-                        LearningGoalView()
-                            .environmentObject(viewModel)
+                        
+                        Button(action: { showEditGoal = true }) {
+                            Image(systemName: "pencil.and.outline")
+                                .font(.system(size: 25))
+                                .foregroundColor(.white)
+                                .frame(width: 44, height: 44)
+                                .background(
+                                    Circle()
+                                        .foregroundStyle(.clear)
+                                        .glassEffect(.clear)
+                                )
+                        }
+                        .fullScreenCover(isPresented: $showEditGoal) {
+                            LearningGoalView()
+                                .environmentObject(viewModel)
+                        }
                     }
                 }
-                .frame(maxWidth: .infinity,maxHeight: .infinity,alignment: .topTrailing)
-                .padding(.top, -60)
-                .padding(.horizontal,30)
                 
+               
+                .padding(.horizontal, 20)
                 
+                Spacer().frame(height: 8)
                 WeekCalendarView()
+                  
               
-                   
-                //LearningStatsView()
-                Spacer()
-                //LogButtons()
-                VStack(spacing: 25){
-                    Button(action:{viewModel.logAsLearned() }){
-                        Text("Log as\nLearned")
-                            //.font(.title)
+                
+              
+                VStack(spacing: 15) {
+                    
+                //Log as Learned
+                    Button(action: {
+                        if !isLearnedToday && !isFreezedToday {
+                            viewModel.logAsLearned()
+                            isLearnedToday = true
+                            viewModel.updateSelectedDay(isLearned: true, isFreezed: false)
+
+                            
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                isLearnedToday = true
+                            }
+
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                                withAnimation(.none) {
+                                    showGoalCompletedView = true
+                                }
+                            }
+                        }
+                    }) {
+                        Text(isLearnedToday ? "Learned\nToday" :
+                                isFreezedToday ? "Day\nFreezed" :
+                                "Log as\nLearned")
                             .font(.system(size: 36))
                             .bold()
                             .multilineTextAlignment(.center)
                             .foregroundColor(.white)
-                            .frame(width: 280 , height: 280)
-                        
+                            .frame(width: 280, height: 280)
                             .background(
-                              Circle()
-                              .fill(Color(red: 0.6, green: 0.25, blue: 0.05))                  .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 5)
-                            .foregroundStyle(.clear)
-                             .glassEffect(.clear)
-                                                       )
+                                Circle()
+                                    .fill(
+                                        isLearnedToday
+                                        ? Color(red: 0.35, green: 0.18, blue: 0.06)
+                                        : isFreezedToday
+                                        ? Color(red: 0.10, green: 0.25, blue: 0.32)
+                                        : Color(red: 0.6, green: 0.25, blue: 0.05)
+                                    )
+                                    .shadow(color: .black.opacity(0.5), radius: 10, x: 0, y: 5)
+                                    .foregroundStyle(.clear)
+                                    .glassEffect(.clear)
+
+                                
+                            )
                     }
-                                            Button(action: { viewModel.logAsFreezed() }) {
-                                            Text("Log as Freezed")
-                                                .bold()
-                                                .foregroundColor(.white)
-                                                .frame(maxWidth: .infinity)
-                                                .padding()
-                                                .background(
-                                                     Capsule()
-                                                        .fill(Color(red: 0.12, green: 0.45, blue: 0.52))
-                                                        .foregroundStyle(.clear)
-                                                        .glassEffect(.clear)
-                                                )
-                                        }
-                                        .padding(.horizontal, 50)
-                                        
-                                        .disabled(viewModel.freezeCount == 0)
-                                                            .padding(.horizontal, 50)
-                                                            
-                                                            Text("\(viewModel.freezeCount) out of 2 Freezes used")
-                                                                .font(.footnote)
-                                                                .foregroundColor(.gray)
-                                    }
-                                    .padding(.bottom, 40)
-                                }
-                                .padding(.top, 40)
+                    .fullScreenCover(isPresented: $showGoalCompletedView) {
+                        ActivityLastday()
+                            .environmentObject(viewModel)
+                            .transaction { transaction in
+                                transaction.disablesAnimations = false // ✅ يمنع أي انتقال
                             }
-                        }
                     }
 
+
+                    // FREEZE BUTTON
+                    Button(action: {
+                        if viewModel.freezeCount > 0 && !isFreezedToday && !isLearnedToday {
+                            viewModel.logAsFreezed()
+                            isFreezedToday = true
+                            viewModel.updateSelectedDay(isLearned: true, isFreezed: false)
+
+                        }
+                    }) {
+                        Text("Log as Freezed")
+                            .bold()
+                            .foregroundColor(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .foregroundStyle(.clear)
+                            .glassEffect(.clear)
+                            .background(
+                                Capsule()
+                                    .fill(Color(red: 0.12, green: 0.45, blue: 0.52))
+                                    
+                            )
+                    }
+                    .padding(.horizontal, 50)
+                    //.padding(.top, 20)
+                    .disabled(viewModel.freezeCount == 0)
+                    
+                    // FREEZE COUNT TEXT
+                    Text("\(2 - viewModel.freezeCount) out of 2 Freezes used")
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                    
+                    
+                }
+               // .padding(.top, 40)
+                .padding(.bottom, 20)
                 
-       
-    #Preview {
-        CurrentDayDefault()
-            .environmentObject(LearningViewModel())
-        
+            }
+        }
     }
+    
+   
+   
+    
+
+    }
+
+    
+
+
+#Preview {
+    CurrentDayDefault()
+        .environmentObject(LearningViewModel())
+}

@@ -9,7 +9,7 @@ import Foundation
 
 struct DayStatus: Identifiable {
     let id = UUID()
-    let date : Int
+    let date : Date
     var isLearned: Bool = false
     var isFreezed : Bool = false
 }

@@ -17,13 +17,13 @@ struct LearningGoalView: View {
     @State private var showCheckmark: Bool = false
     @State private var showPopup: Bool = false
     
+   
     var body: some View {
         ZStack {
            Color.black.ignoresSafeArea()
             
             
             VStack(alignment: .leading, spacing: 30) {
-                // MARK: - Header
                 HStack {
                     Button(action: { dismiss() }) {
                         Image(systemName: "chevron.left")
@@ -44,13 +44,14 @@ struct LearningGoalView: View {
                         .bold()
                     
                     Spacer()
-                    
                     if showCheckmark {
                         Button(action: {
-                            withAnimation(.spring()) {
+                            // تظهر البوب فقط لو تغير شيء فعلاً
+                            if course != viewModel.learingGoal || selectedPeriod != viewModel.learningDuration {
                                 showPopup = true
                             }
                         }) {
+
                             Image(systemName: "checkmark")
                                 .foregroundColor(.white)
                                 .background(
@@ -65,7 +66,7 @@ struct LearningGoalView: View {
                 .padding(.horizontal, 20)
                 .padding(.top, 40)
                 
-                // MARK: - Content
+             
                 VStack(alignment: .leading, spacing: 15) {
                     Text("I want to learn ")
                         .foregroundColor(.white)
@@ -116,21 +117,18 @@ struct LearningGoalView: View {
             }
             .onAppear {
                 course = viewModel.learingGoal
-                selectedPeriod = "Week"
+                selectedPeriod = viewModel.learningDuration
                 showCheckmark = false
             }
             
-            // ✅ الآن البوب-أب خارج الـ VStack علشان يغطي الشاشة كلها
             if showPopup {
                 ZStack {
-                    // خلفية مغبشة + تعتيم يغطي الشاشة بالكامل
                     VisualEffectBlur(blurStyle: .systemUltraThinMaterialDark)
                         .ignoresSafeArea()
                         .onTapGesture {
                             withAnimation { showPopup = false }
                         }
                     
-                    // مربع البوب-أب في المنتصف
                     VStack(spacing: 16) {
                         Text("Update Learning goal")
                             .font(.headline)
@@ -161,6 +159,7 @@ struct LearningGoalView: View {
                             Button(action: {
                                 withAnimation {
                                     viewModel.learingGoal = course
+                                    viewModel.learningDuration=selectedPeriod
                                     showPopup = false
                                     dismiss()
                                 }
@@ -186,9 +185,11 @@ struct LearningGoalView: View {
                 .zIndex(999) // فوق كل شيء
                 .animation(.easeInOut, value: showPopup)
             }
+            
         }
     }
 }
+
 
 // MARK: - Blur Helper
 struct VisualEffectBlur: UIViewRepresentable {

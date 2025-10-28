@@ -10,13 +10,17 @@ import SwiftUI
 @main
 struct Learning_JourneyApp: App {
     @StateObject private var viewModel = LearningViewModel()
-   
+    
     var body: some Scene{
         WindowGroup {
-            //ContentView()
-                CurrentDayDefault()
-                .environmentObject(viewModel)
-              
+            NavigationStack {
+               Enbording()
+               
+                    .environmentObject(viewModel)
+                
+            }
         }
     }
 }
+
+    
