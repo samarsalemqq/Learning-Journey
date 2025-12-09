@@ -1,13 +1,12 @@
-# Learning Activity Tracker 📚
+# Learning Activity Tracker 
 
 An iOS app designed to help users track their daily learning goals and stay consistent through visual progress tracking.  
-Users can log their learning days, freeze days when needed, and monitor their progress week by week.
+Users can log their learning days, freeze days when needed, and monitor their progress.
 
 ---
 
 ## ✨ Features
 - Weekly calendar view showing learned and freeze days  
-- Goal completion tracking with motivational feedback  
 - Custom learning durations (Week / Month / Year)  
 - Elegant dark UI with glass effect interface  
 
