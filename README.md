@@ -24,8 +24,3 @@ Users can log their learning days, freeze days when needed, and monitor their pr
 ## 👩‍💻 Developer
 **Samar Alqahtani**  
 
----
-
-## 🚀 Future Improvements
-- Add data persistence using Core Data or CloudKit  
-- Add progress analytics and user achievements  
